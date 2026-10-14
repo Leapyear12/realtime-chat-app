@@ -4,22 +4,6 @@ A modern, production-grade real-time chat application built with **React**, **No
 
 ---
 
-## 💡 Why MongoDB vs. PostgreSQL for Chat Applications?
-
-When designing a real-time messaging system, choosing between a Document database (MongoDB) and a Relational database (PostgreSQL) is a fundamental architectural decision.
-
-### Comparison Table
-
-| Criteria | MongoDB (Chosen) | PostgreSQL |
-| :--- | :--- | :--- |
-| **Data Structure** | **Native Document (JSON/BSON)**: A message contains its text, sender, status, embedded read receipts array `[{ user, readAt }]`, and deletion flags in a single document. | **Relational Tables**: Requires `messages`, `users`, and separate join tables like `message_read_receipts`, requiring multi-table SQL joins per query. |
-| **Write Performance** | **High Concurrency & Append-Optimized**: Chat apps are write-heavy streams of continuous messages. MongoDB handles high append-only writes with minimal locking overhead. | **Rigid Locking**: Write throughput on large tables with multiple indexes requires careful connection pooling (e.g. PgBouncer) and partitioning. |
-| **Schema Evolution** | **Flexible**: Adding reactions (👍, ❤️), rich attachments, audio notes, or reply-to quotes can be done instantly without schema migrations. | **Rigid**: Any new column or metadata format requires database migrations, table locks, or using JSONB columns. |
-| **Sharding & Scaling** | **Horizontal Sharding Out of the Box**: Easy to shard message collections by `conversationId`. | **Complex Horizontal Scaling**: Requires extensions like Citus or read replicas. |
-| **Local Environment** | **Active & Running**: MongoDB is already installed and running as a service on your machine. | **Not Installed**: Neither PostgreSQL nor Docker was present. |
-
----
-
 ## ✨ Features Implemented
 
 1. **Real-Time Messaging with WebSockets**:
